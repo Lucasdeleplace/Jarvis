@@ -13,6 +13,7 @@ export default tseslint.config(
       "**/*.config.js",
       "**/*.config.cjs",
       "**/*.config.mjs",
+      "**/tailwind-preset.js",
       "**/prisma/generated/**",
     ],
   },

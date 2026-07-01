@@ -1,0 +1,107 @@
+/**
+ * Design tokens de Jarvis.
+ * Inspirations : ChatGPT (sobriete), Arc & Linear (violet, profondeur),
+ * Raycast (densite, raccourcis), Discord (surfaces sombres etagees).
+ *
+ * Les couleurs sont exprimees en canaux HSL ("H S% L%") pour permettre
+ * les modificateurs d'opacite Tailwind : hsl(var(--token) / <alpha>).
+ */
+
+:root,
+[data-theme="light"] {
+  /* Surfaces */
+  --background: 240 20% 99%;
+  --surface: 0 0% 100%;
+  --surface-raised: 240 20% 98%;
+  --overlay: 240 12% 12%;
+
+  /* Bordures & separateurs */
+  --border: 240 12% 90%;
+  --border-strong: 240 10% 82%;
+  --input: 240 12% 92%;
+
+  /* Texte */
+  --foreground: 240 15% 12%;
+  --muted: 240 16% 95%;
+  --muted-foreground: 240 6% 45%;
+
+  /* Accent principal (violet Arc/Linear) */
+  --primary: 255 85% 60%;
+  --primary-hover: 255 85% 55%;
+  --primary-foreground: 0 0% 100%;
+
+  /* Surfaces interactives (hover, selection) */
+  --accent: 240 16% 94%;
+  --accent-foreground: 240 15% 12%;
+
+  /* Focus */
+  --ring: 255 85% 60%;
+
+  /* Etats semantiques */
+  --success: 145 63% 42%;
+  --success-foreground: 0 0% 100%;
+  --warning: 35 92% 48%;
+  --warning-foreground: 0 0% 100%;
+  --danger: 0 72% 52%;
+  --danger-foreground: 0 0% 100%;
+  --info: 210 90% 54%;
+  --info-foreground: 0 0% 100%;
+
+  /* Elevation (ombres) */
+  --shadow-color: 240 40% 20%;
+
+  /* Rayon de base */
+  --radius: 0.625rem;
+
+  /* Typographie */
+  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", ui-monospace, monospace;
+}
+
+[data-theme="dark"] {
+  /* Surfaces (etagees facon Discord/Linear) */
+  --background: 240 8% 7%;
+  --surface: 240 7% 10%;
+  --surface-raised: 240 6% 13%;
+  --overlay: 240 10% 4%;
+
+  /* Bordures & separateurs */
+  --border: 240 5% 18%;
+  --border-strong: 240 5% 26%;
+  --input: 240 5% 16%;
+
+  /* Texte */
+  --foreground: 0 0% 98%;
+  --muted: 240 5% 15%;
+  --muted-foreground: 240 5% 64%;
+
+  /* Accent principal */
+  --primary: 255 90% 68%;
+  --primary-hover: 255 90% 72%;
+  --primary-foreground: 240 20% 8%;
+
+  /* Surfaces interactives */
+  --accent: 240 5% 17%;
+  --accent-foreground: 0 0% 98%;
+
+  /* Focus */
+  --ring: 255 90% 68%;
+
+  /* Etats semantiques */
+  --success: 145 58% 52%;
+  --success-foreground: 145 40% 8%;
+  --warning: 38 92% 58%;
+  --warning-foreground: 38 60% 10%;
+  --danger: 0 72% 60%;
+  --danger-foreground: 0 40% 10%;
+  --info: 210 90% 62%;
+  --info-foreground: 210 40% 10%;
+
+  /* Elevation */
+  --shadow-color: 240 60% 2%;
+
+  --radius: 0.625rem;
+
+  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", ui-monospace, monospace;
+}

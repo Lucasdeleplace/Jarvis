@@ -1,7 +1,6 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "composite": true,
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "jsx": "react-jsx",
     "types": ["node"],
@@ -12,7 +11,8 @@
       "@jarvis/contracts": ["../../packages/contracts/src/index.ts"],
       "@jarvis/shared": ["../../packages/shared/src/index.ts"],
       "@jarvis/core": ["../../packages/core/src/index.ts"],
-      "@jarvis/persistence": ["../../packages/persistence/src/index.ts"]
+      "@jarvis/persistence": ["../../packages/persistence/src/index.ts"],
+      "@jarvis/ui-kit": ["../../packages/ui-kit/src/index.ts"]
     }
   },
   "include": ["src/renderer/src/**/*.ts", "src/renderer/src/**/*.tsx"],

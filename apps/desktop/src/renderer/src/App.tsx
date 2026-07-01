@@ -1,56 +1,117 @@
-import { useEffect, useState } from "react";
-import type { AppInfo } from "@jarvis/contracts";
+import { lazy, Suspense, useMemo, useState } from "react";
+import {
+  CommandPalette,
+  LayoutGrid,
+  Monitor,
+  Moon,
+  Plus,
+  Sparkles,
+  Sun,
+  useRegisterCommands,
+  useTheme,
+  useToast,
+  type CommandAction,
+} from "@jarvis/ui-kit";
+import { ChatPage, useChatStore } from "@renderer/features/chat";
+
+const IS_DEV = import.meta.env.DEV;
+
+// Chargee en dynamique : exclue du bundle de production.
+const Gallery = lazy(() =>
+  import("@renderer/dev/gallery").then((module) => ({ default: module.Gallery })),
+);
 
 export function App(): JSX.Element {
-  const [appInfo, setAppInfo] = useState<AppInfo | null>(null);
-  const [pong, setPong] = useState<string>("");
+  const { toast } = useToast();
+  const { setTheme, toggleTheme } = useTheme();
+  const createChat = useChatStore((state) => state.createChat);
+  const [galleryOpen, setGalleryOpen] = useState(false);
 
-  useEffect(() => {
-    void window.jarvis.getAppInfo().then(setAppInfo);
-  }, []);
+  const commands = useMemo<CommandAction[]>(() => {
+    const actions: CommandAction[] = [
+      {
+        id: "chat.new",
+        label: "Nouveau chat",
+        group: "Conversation",
+        icon: Plus,
+        keywords: ["chat", "conversation", "nouveau", "new"],
+        perform: () => createChat(),
+      },
+      {
+        id: "theme.toggle",
+        label: "Basculer le theme clair/sombre",
+        group: "Apparence",
+        icon: Sun,
+        keywords: ["theme", "dark", "light", "sombre", "clair"],
+        perform: toggleTheme,
+      },
+      {
+        id: "theme.light",
+        label: "Theme : Clair",
+        group: "Apparence",
+        icon: Sun,
+        perform: () => setTheme("light"),
+      },
+      {
+        id: "theme.dark",
+        label: "Theme : Sombre",
+        group: "Apparence",
+        icon: Moon,
+        perform: () => setTheme("dark"),
+      },
+      {
+        id: "theme.system",
+        label: "Theme : Systeme",
+        group: "Apparence",
+        icon: Monitor,
+        perform: () => setTheme("system"),
+      },
+      {
+        id: "ipc.ping",
+        label: "Tester le pont IPC",
+        group: "Systeme",
+        icon: Sparkles,
+        keywords: ["ping", "ipc", "test"],
+        perform: () => {
+          void window.jarvis.ping().then((value) =>
+            toast({
+              title: "Pont IPC operationnel",
+              description: `Reponse du process principal : ${value}`,
+              variant: "success",
+            }),
+          );
+        },
+      },
+    ];
+
+    if (IS_DEV) {
+      actions.push({
+        id: "dev.gallery",
+        label: "Ouvrir la galerie de composants",
+        group: "Developpement",
+        icon: LayoutGrid,
+        keywords: ["gallery", "galerie", "design system", "composants"],
+        perform: () => setGalleryOpen(true),
+      });
+    }
+
+    return actions;
+  }, [createChat, setTheme, toggleTheme, toast]);
+
+  useRegisterCommands(commands);
+
+  if (IS_DEV && galleryOpen) {
+    return (
+      <Suspense fallback={<div className="h-full bg-background" />}>
+        <Gallery onClose={() => setGalleryOpen(false)} />
+      </Suspense>
+    );
+  }
 
   return (
-    <div className="flex min-h-full items-center justify-center bg-slate-950 text-slate-100">
-      <div className="w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900/60 p-8 shadow-2xl">
-        <h1 className="text-3xl font-semibold tracking-tight">
-          Jarvis <span className="text-indigo-400">.</span>
-        </h1>
-        <p className="mt-2 text-sm text-slate-400">
-          Base technique operationnelle. Aucune fonctionnalite metier n'est encore
-          implementee.
-        </p>
-
-        <dl className="mt-6 space-y-2 text-sm">
-          <div className="flex justify-between">
-            <dt className="text-slate-500">Application</dt>
-            <dd className="font-mono">{appInfo?.name ?? "..."}</dd>
-          </div>
-          <div className="flex justify-between">
-            <dt className="text-slate-500">Version</dt>
-            <dd className="font-mono">{appInfo?.version ?? "..."}</dd>
-          </div>
-          <div className="flex justify-between">
-            <dt className="text-slate-500">Plateforme</dt>
-            <dd className="font-mono">{appInfo?.platform ?? "..."}</dd>
-          </div>
-        </dl>
-
-        <button
-          type="button"
-          onClick={() => {
-            void window.jarvis.ping().then(setPong);
-          }}
-          className="mt-6 w-full rounded-lg bg-indigo-500 px-4 py-2 font-medium text-white transition hover:bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-300"
-        >
-          Tester le pont IPC
-        </button>
-
-        {pong !== "" && (
-          <p className="mt-3 text-center text-sm text-emerald-400">
-            Reponse du process principal : {pong}
-          </p>
-        )}
-      </div>
+    <div className="h-full">
+      <CommandPalette />
+      <ChatPage />
     </div>
   );
 }

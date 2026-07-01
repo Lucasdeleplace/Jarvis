@@ -1,0 +1,8 @@
+node_modules
+dist
+out
+build
+.turbo
+pnpm-lock.yaml
+*.db
+prisma/generated

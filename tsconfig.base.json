@@ -33,7 +33,9 @@
       "@jarvis/core": ["packages/core/src/index.ts"],
       "@jarvis/core/*": ["packages/core/src/*"],
       "@jarvis/persistence": ["packages/persistence/src/index.ts"],
-      "@jarvis/persistence/*": ["packages/persistence/src/*"]
+      "@jarvis/persistence/*": ["packages/persistence/src/*"],
+      "@jarvis/ui-kit": ["packages/ui-kit/src/index.ts"],
+      "@jarvis/ui-kit/*": ["packages/ui-kit/src/*"]
     }
   },
   "exclude": ["node_modules", "dist", "out"]
