@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "moduleDetection": "force",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+
+    "baseUrl": ".",
+    "paths": {
+      "@jarvis/contracts": ["packages/contracts/src/index.ts"],
+      "@jarvis/contracts/*": ["packages/contracts/src/*"],
+      "@jarvis/shared": ["packages/shared/src/index.ts"],
+      "@jarvis/shared/*": ["packages/shared/src/*"],
+      "@jarvis/core": ["packages/core/src/index.ts"],
+      "@jarvis/core/*": ["packages/core/src/*"],
+      "@jarvis/persistence": ["packages/persistence/src/index.ts"],
+      "@jarvis/persistence/*": ["packages/persistence/src/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist", "out"]
+}

@@ -1,0 +1,29 @@
+// Schema Prisma de Jarvis (SQLite, local-first).
+// Base structurelle : modeles minimaux, sans logique metier.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+/// Enregistrement de memoire persistante de l'assistant.
+model Memory {
+  id        String   @id @default(uuid())
+  kind      String
+  content   String
+  metadata  String? // JSON serialise
+  createdAt DateTime @default(now())
+
+  @@index([kind])
+}
+
+/// Stockage cle/valeur generique (preferences, etat interne...).
+model KeyValue {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
+}
